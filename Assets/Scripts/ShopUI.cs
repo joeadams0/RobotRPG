@@ -22,33 +22,34 @@ public class ShopUI : MonoBehaviour {
 	void OnGUI ()
 	{
 		GUI.skin = robotSkin;
-		if (shopBlock (new Rect(200,600,1000,120),item, names,des,price, "buy"))
+		GUI.Box (new Rect(100, 120, 1000, 120), "dfsafdsafs");
+		if (shopBlock (new Rect(200,400,1000,120),item, names,des,price, "buy"))
 			Debug.Log("clicked");
 	}
 	
 	/// <summary>
-	/// Shops the block.
+	/// The basic design used in creating the tiles in the shop
 	/// </summary>
 	/// <returns>
-	/// The block.
+	/// If the button has been clicked
 	/// </returns>
 	/// <param name='boxPosition'>
-	/// If set to <c>true</c> box position.
+	/// The position of the box on the screen
 	/// </param>
 	/// <param name='itemPicture'>
-	/// If set to <c>true</c> item picture.
+	/// The picture of the item
 	/// </param>
 	/// <param name='name'>
-	/// If set to <c>true</c> name.
+	/// The name of the item
 	/// </param>
 	/// <param name='itemDescription'>
-	/// If set to <c>true</c> item description.
+	/// The description of the item
 	/// </param>
 	/// <param name='price'>
-	/// If set to <c>true</c> price.
+	/// The price of the item
 	/// </param>
 	/// <param name='buttonText'>
-	/// If set to <c>true</c> button text.
+	/// The text on the button
 	/// </param>
 	bool shopBlock (Rect boxPosition, Texture2D itemPicture, string name, string itemDescription, 
 		int price, string buttonText)
