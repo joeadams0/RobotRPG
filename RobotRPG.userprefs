@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ShopUI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/Character Controllers/Sources/Scripts/ThirdPersonCamera.js">
     <Files>
-      <File FileName="Assets\Scripts\ShopUI.cs" Line="26" Column="3" />
+      <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/ThirdPersonCamera.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
