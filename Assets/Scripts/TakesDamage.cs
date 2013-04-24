@@ -19,7 +19,7 @@ public class TakesDamage : MonoBehaviour {
 	}
 	
 	// Processes a hit
-	private void hit(float[] attackParams){
+	public void hit(float[] attackParams){
 		if(attackParams.Length != NUM_PARAMS){
 			return;	
 		}

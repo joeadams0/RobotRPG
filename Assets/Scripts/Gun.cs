@@ -30,4 +30,12 @@ public interface Gun {
 	/// If set to <c>true</c> p.
 	/// </param>
 	void upgrade(Player p);
+	
+	/// <summary>
+	/// Gets the damage.
+	/// </summary>
+	/// <returns>
+	/// The damage.
+	/// </returns>
+	float getDamage();
 }

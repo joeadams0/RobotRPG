@@ -51,12 +51,20 @@ public class Player : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-	
+		Guns.Add(new BasicGun());
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+	
+	public int numGuns(){
+		return Guns.Count;
+	}
+	
+	public int numAbilities(){
+		return Abilities.Count;
 	}
 	
 	/// <summary>
@@ -86,19 +94,21 @@ public class Player : MonoBehaviour {
 	/// <summary>
 	/// Fires the currently selected gun.
 	/// </summary>
-	public void fireGun(){
+	public bool fireGun(){
 		if(Guns[_gunIndex].canFire(this)){
-			Guns[_gunIndex].fire(this);
+			return Guns[_gunIndex].fire(this);
 		}
+		return false;
 	}
 	
 	/// <summary>
 	/// Uses the currently selected ability.
 	/// </summary>
-	public void useAbility(){
+	public bool useAbility(){
 		if(Abilities[_abilityIndex].canUse(this)){
-			Abilities[_abilityIndex].use(this);
+			return Abilities[_abilityIndex].use(this);
 		}
+		return false;
 	}
 	
 }
