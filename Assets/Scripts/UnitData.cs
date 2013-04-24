@@ -16,6 +16,18 @@ public class UnitData : MonoBehaviour {
 	public const int MAX_HEALTH_AI_MEDIUM = 200;
 	public const int MAX_HEALTH_AI_LARGE = 300;
 	
+	// Attacking range constants
+	public const int ATTACK_RANGE_RIFLE_UNIT = 20;
+	
+	// Attack damage constants
+	public const float ATTACK_DAMAGE_BULLET = 20;
+	
+	// Optimal distance constants
+	public const float OPTIMAL_DISTANCE_RIFLE = 15;
+	
+	// Speed constants
+	public const float SPEED_RIFLE_UNIT = 2f;
+	
 	//  Friendly fire id constants
 	public const int TEAM_PLAYER = 1;
 	public const int TEAM_AI = 2;
@@ -25,17 +37,50 @@ public class UnitData : MonoBehaviour {
 	
 	// Unit attributes
 	private int unitType;
-	private int team;
+	public int UnitType{
+		set{}
+		get{return unitType;}
+	}
+	
 	private int maxHealth;
 	private float health;
-	
-	// Unit properties
+	public float Health{
+		set{}
+		get{return health;}
+	}
+
+	private int team;
 	public int Team{
+		set{}
 		get{return team;}
 	}
 	
+	private int attackRange;
+	public int AttackRange{
+		set{}
+		get{return attackRange;}
+	}
+	
+	private float attackDamage;
+	public float AttackDamage{
+		set{}
+		get{return attackDamage;}
+	}
+	
+	private float optimalDistance;
+	public float OptimalDistance{
+		set{}
+		get{return optimalDistance;}
+	}
+	
+	private float speed;
+	public float Speed{
+		set{}
+		get{return speed;}
+	}
+	
 	// Initializes all attributes
-	void Start () {
+	void Awake () {
 		unitType = SET_UNIT_TYPE_IN_INSPECTOR;
 		
 		switch(unitType){
@@ -50,6 +95,10 @@ public class UnitData : MonoBehaviour {
 		case UNIT_TYPE_AI_RIFLE:
 			maxHealth = MAX_HEALTH_AI_MEDIUM;
 			team = TEAM_AI;
+			attackRange = ATTACK_RANGE_RIFLE_UNIT;
+			attackDamage = ATTACK_DAMAGE_BULLET;
+			speed = SPEED_RIFLE_UNIT;
+			optimalDistance = OPTIMAL_DISTANCE_RIFLE;
 			break;
 		case UNIT_TYPE_AI_BOMBER:
 			maxHealth = MAX_HEALTH_AI_LARGE;
@@ -75,6 +124,8 @@ public class UnitData : MonoBehaviour {
 	private void modifyHealth(float healthModifier){
 		if(health + healthModifier > 0 && health + healthModifier <= maxHealth){
 			health = health + healthModifier;	
+		}else if(health + healthModifier <= 0){
+			
 		}
 	}
 }
