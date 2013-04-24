@@ -80,24 +80,59 @@ public class ShopUI : MonoBehaviour {
 	
 	//is the menu for the first power active
 	bool power1Level;
+	
+	// is the menu active?
+	bool menuOn;
 
 	// Use this for initialization
 	void Start () {
-	
+		menuOn = false;
+		weaponsBaseLevel = false;
+		powersBaseLevel = false;
+		weapon1Level = false;
+		power1Level = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(Input.GetKey (KeyCode.LeftArrow))
+		{
+			menuOn = !menuOn;
+			Debug.Log (menuOn.ToString ());
+		}
 	}
 	
 	void OnGUI ()
 	{
-		GUI.Box (new Rect(100, 60, 1720, 700), "dfsafdsafs");
-		GUI.skin = robotSkin;
-		if (shopBlock (new Rect(200,300,1000,120),generalWeaponPicture, weaponsCategory, weaponsCatergoryDescription,
-			categoryPrice, categoryButtonText))
-			Debug.Log("clicked");
+		if(menuOn)
+		{
+			GUI.Box (new Rect(190, 60, 1020, 700), "");
+			GUI.skin = robotSkin;
+			if (ShopBlock (new Rect(200,300,1000,120),generalWeaponPicture, weaponsCategory, weaponsCatergoryDescription,
+				categoryPrice, categoryButtonText))
+			{
+				Debug.Log("clicked 1");
+			}
+			if (ShopBlock (new Rect(200,440,1000,120),generalPowerPicture, powersCategory, powersCategoryDescription,
+				categoryPrice, categoryButtonText))
+			{
+				Debug.Log("clicked 1");
+			}
+		}
+	}
+	
+	void DeactivateMenu()
+	{
+		menuOn = false;
+		weaponsBaseLevel = false;
+		powersBaseLevel = false;
+		weapon1Level = false;
+		power1Level = false;
+	}
+	
+	void ActivateMenu()
+	{
+		menuOn = true;
 	}
 	
 	/// <summary>
@@ -124,7 +159,7 @@ public class ShopUI : MonoBehaviour {
 	/// <param name='buttonText'>
 	/// The text on the button
 	/// </param>
-	bool shopBlock (Rect boxPosition, Texture2D itemPicture, string name, string itemDescription, 
+	bool ShopBlock (Rect boxPosition, Texture2D itemPicture, string name, string itemDescription, 
 		int price, string buttonText)
 	{
 		GUI.Box (boxPosition,"");
