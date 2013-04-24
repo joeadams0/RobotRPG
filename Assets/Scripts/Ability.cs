@@ -20,4 +20,11 @@ public interface Ability{
 	/// </param>
 	bool use(Player p);
 	
+	/// <summary>
+	/// Upgrade the ability.
+	/// </summary>
+	/// <param name='p'>
+	/// P.
+	/// </param>
+	void upgrade(Player p);
 }

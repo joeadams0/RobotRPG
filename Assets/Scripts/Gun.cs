@@ -22,4 +22,12 @@ public interface Gun {
 	/// If set to <c>true</c> p.
 	/// </param>
 	bool fire(Player p);
+	
+	/// <summary>
+	/// Upgrade the gun.
+	/// </summary>
+	/// <param name='p'>
+	/// If set to <c>true</c> p.
+	/// </param>
+	void upgrade(Player p);
 }
