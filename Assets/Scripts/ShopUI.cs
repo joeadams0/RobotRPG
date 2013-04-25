@@ -159,6 +159,7 @@ public class ShopUI : MonoBehaviour {
 	void ActivateMenu()
 	{
 		menuOn = true;
+		baseLevel = true;
 	}
 	
 	/// <summary>

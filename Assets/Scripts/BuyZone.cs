@@ -9,16 +9,24 @@ public class BuyZone : MonoBehaviour {
 	// The player object
 	public GameObject player;
 	
+	//The amount of time between button presses
+	public float timeBetweenPress;
+	
 	//Can the player activate the shop
 	bool shopInRange;
 	
 	//is the shop activated
 	bool shopActivated;
+	
+	//Time since last shop button press
+	float timeSinceLast;
 
 	// Use this for initialization
 	void Start () {
+		timeSinceLast = 0f;
 		shopInRange = false;
 		shopActivated = false;
+		renderer.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -27,12 +35,15 @@ public class BuyZone : MonoBehaviour {
 		{
 			if(shopInRange)
 			{
-				if(shopActivated)
-					shopUI.SendMessage ("DeactivateMenu");
-				if(!shopActivated)
-					shopUI.SendMessage ("ActivateMenu");
+				if(timeSinceLast >= timeBetweenPress)
+				{
+					ToggleShop();
+					timeSinceLast = 0;
+				}
+				
 			}
 		}
+		timeSinceLast += Time.deltaTime;
 	}
 	
 	/// <summary>
@@ -44,7 +55,7 @@ public class BuyZone : MonoBehaviour {
 	void OnTriggerEnter(Collider enter)
 	{
 		// Checks if the player is the thing that enetered
-		if(true)
+		if(enter.collider.gameObject.name == player.name)
 		{
 			shopInRange = true;
 		}
@@ -59,11 +70,20 @@ public class BuyZone : MonoBehaviour {
 	void OnTriggerExit(Collider exit)
 	{
 		// Checks to see if the player is the thing that exits
-		if(true)
+		if(exit.collider.gameObject.name == player.name)
 		{
 			shopInRange = false;
 			shopActivated = false;
 			shopUI.SendMessage ("DeactivateMenu");
 		}
+	}
+	
+	void ToggleShop()
+	{
+		if(shopActivated)
+			shopUI.SendMessage ("DeactivateMenu");
+		if(!shopActivated)
+			shopUI.SendMessage ("ActivateMenu");
+		shopActivated = !shopActivated;
 	}
 }
