@@ -8,15 +8,31 @@ public class BuyZone : MonoBehaviour {
 	
 	// The player object
 	public GameObject player;
+	
+	//Can the player activate the shop
+	bool shopInRange;
+	
+	//is the shop activated
+	bool shopActivated;
 
 	// Use this for initialization
 	void Start () {
-	
+		shopInRange = false;
+		shopActivated = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(Input.GetKey (KeyCode.Space))
+		{
+			if(shopInRange)
+			{
+				if(shopActivated)
+					shopUI.SendMessage ("DeactivateMenu");
+				if(!shopActivated)
+					shopUI.SendMessage ("ActivateMenu");
+			}
+		}
 	}
 	
 	/// <summary>
@@ -30,7 +46,7 @@ public class BuyZone : MonoBehaviour {
 		// Checks if the player is the thing that enetered
 		if(true)
 		{
-			shopUI.SendMessage ("ActivateMenu");
+			shopInRange = true;
 		}
 	}
 	
@@ -45,6 +61,8 @@ public class BuyZone : MonoBehaviour {
 		// Checks to see if the player is the thing that exits
 		if(true)
 		{
+			shopInRange = false;
+			shopActivated = false;
 			shopUI.SendMessage ("DeactivateMenu");
 		}
 	}

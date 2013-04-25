@@ -42,8 +42,11 @@ public class ShopUI : MonoBehaviour {
 	// The name of the first weapon
 	public string firstWeaponName;
 	
+	// price of first weapon upgrade
+	public int firstWeaponPrice;
+	
 	// The description of the frist weapon
-	public string fristWeaponDescription;
+	public string firstWeaponDescription;
 	
 	// The picture of the first power
 	public Texture2D firstPowerPicture;
@@ -83,14 +86,22 @@ public class ShopUI : MonoBehaviour {
 	
 	// is the menu active?
 	bool menuOn;
+	
+	// is the base level active
+	bool baseLevel;
+	
+	//has the second weapon been bought
+	bool weapon2Bought;
 
 	// Use this for initialization
 	void Start () {
 		menuOn = false;
+		baseLevel = false;
 		weaponsBaseLevel = false;
 		powersBaseLevel = false;
 		weapon1Level = false;
 		power1Level = false;
+		weapon2Bought = false;
 	}
 	
 	// Update is called once per frame
@@ -98,6 +109,7 @@ public class ShopUI : MonoBehaviour {
 		if(Input.GetKey (KeyCode.LeftArrow))
 		{
 			menuOn = !menuOn;
+			baseLevel = !baseLevel;
 			Debug.Log (menuOn.ToString ());
 		}
 	}
@@ -106,17 +118,31 @@ public class ShopUI : MonoBehaviour {
 	{
 		if(menuOn)
 		{
+			GUI.skin = null;
 			GUI.Box (new Rect(190, 60, 1020, 700), "");
 			GUI.skin = robotSkin;
-			if (ShopBlock (new Rect(200,300,1000,120),generalWeaponPicture, weaponsCategory, weaponsCatergoryDescription,
-				categoryPrice, categoryButtonText))
+			if(baseLevel)
 			{
-				Debug.Log("clicked 1");
+				if (ShopBlock (new Rect(200,285,1000,120),generalWeaponPicture, weaponsCategory, weaponsCatergoryDescription,
+					categoryPrice, categoryButtonText))
+				{
+					baseLevel = false;
+					weapon1Level = true;
+				}
+				if (ShopBlock (new Rect(200,415,1000,120),generalPowerPicture, powersCategory, powersCategoryDescription,
+					categoryPrice, categoryButtonText))
+				{
+					Debug.Log("clicked 1");
+				}
 			}
-			if (ShopBlock (new Rect(200,440,1000,120),generalPowerPicture, powersCategory, powersCategoryDescription,
-				categoryPrice, categoryButtonText))
+			if(weapon1Level)
 			{
-				Debug.Log("clicked 1");
+				if(ShopBlock (new Rect(200,285,1000,120), firstWeaponPicture, firstWeaponName, firstWeaponDescription, firstWeaponPrice,
+					"Upgrade"));
+				{
+					//try to buy it
+					//upgrade the weapon
+				}
 			}
 		}
 	}
