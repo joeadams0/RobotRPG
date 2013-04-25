@@ -4,20 +4,31 @@ using System.Collections;
 public class BasicGun : Gun {
 	
 	private float damage;
+	public float cooldownTime = 0.5f;
+	float lastFireTime = 0f;
 	
 	public BasicGun()
 	{
-		damage = 1;
+		damage = 5000;
 	}
 
 	public bool canFire(Player p)
 	{
-		return true;
+		if (Time.time > lastFireTime + cooldownTime)
+			return true;
+		else
+			return false;
 	}
 	
 	public bool fire(Player p)
 	{
-		return true;
+		if (Time.time > lastFireTime + cooldownTime)
+		{
+			lastFireTime = Time.time;
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	public void upgrade(Player p)

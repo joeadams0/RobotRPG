@@ -117,7 +117,8 @@ public class UnitData : MonoBehaviour {
 	}
 
 	void Update (){
-		if(this.health == 0){	
+		if(this.health <= 0){	
+			Destroy(gameObject);
 		}
 	}
 	
@@ -125,7 +126,7 @@ public class UnitData : MonoBehaviour {
 		if(health + healthModifier > 0 && health + healthModifier <= maxHealth){
 			health = health + healthModifier;	
 		}else if(health + healthModifier <= 0){
-			
+			Destroy (gameObject);
 		}
 	}
 }
