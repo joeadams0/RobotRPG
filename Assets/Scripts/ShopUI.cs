@@ -138,7 +138,7 @@ public class ShopUI : MonoBehaviour {
 			if(weapon1Level)
 			{
 				if(ShopBlock (new Rect(200,285,1000,120), firstWeaponPicture, firstWeaponName, firstWeaponDescription, firstWeaponPrice,
-					"Upgrade"));
+					buyText));
 				{
 					//try to buy it
 					//upgrade the weapon
@@ -197,6 +197,6 @@ public class ShopUI : MonoBehaviour {
 		GUI.Label(new Rect(itemStartPosition, boxPosition.y + 50f, 600, 25), itemDescription);
 		itemStartPosition = boxPosition.xMax - 450f;
 		GUI.Label (new Rect(itemStartPosition,boxPosition.y + 10f, 100, 25), price.ToString());
-		return GUI.Button (new Rect(boxPosition.xMax - 210f, boxPosition.y + 10f, 200, 100), "Buy");
+		return GUI.Button (new Rect(boxPosition.xMax - 210f, boxPosition.y + 10f, 200, 100), buttonText);
 	}
 }
