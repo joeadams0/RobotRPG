@@ -24,9 +24,11 @@ public class UnitData : MonoBehaviour {
 	
 	// Optimal distance constants
 	public const float OPTIMAL_DISTANCE_RIFLE = 15;
+	public const float OPTIMAL_DISTANCE_BOMBER = 2f;
 	
 	// Speed constants
 	public const float SPEED_RIFLE_UNIT = 2f;
+	public const float SPEED_BOMBER_UNIT = 2f;
 	
 	//  Friendly fire id constants
 	public const int TEAM_PLAYER = 1;
@@ -102,6 +104,8 @@ public class UnitData : MonoBehaviour {
 			break;
 		case UNIT_TYPE_AI_BOMBER:
 			maxHealth = MAX_HEALTH_AI_LARGE;
+			speed = SPEED_BOMBER_UNIT;
+			optimalDistance = OPTIMAL_DISTANCE_BOMBER;
 			team = TEAM_AI;
 			break;
 		case UNIT_TYPE_AI_ROCKET:

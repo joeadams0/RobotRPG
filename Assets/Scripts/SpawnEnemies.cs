@@ -11,9 +11,11 @@ public class SpawnEnemies : MonoBehaviour {
 	private float variableTime;
 	
 	private GameObject rifleEnemyTemplate;
+	private GameObject bomberEnemyTemplate;
 	
 	void Start () {
 		rifleEnemyTemplate = (GameObject)Resources.Load("AI/RifleEnemy");
+		bomberEnemyTemplate = (GameObject)Resources.Load("AI/BomberEnemy");
 		setVariableTime();
 	}	
 	
@@ -23,7 +25,7 @@ public class SpawnEnemies : MonoBehaviour {
 			float halfDepth = .5f*this.transform.localScale.z;
 			
 			Instantiate(
-				rifleEnemyTemplate,
+				bomberEnemyTemplate,
 				new Vector3(
 					Random.Range(this.transform.position.x - halfWidth,this.transform.position.x + halfWidth),
 					this.transform.position.y,

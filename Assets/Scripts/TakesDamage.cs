@@ -23,6 +23,11 @@ public class TakesDamage : MonoBehaviour {
 		if(attackParams.Length != NUM_PARAMS){
 			return;	
 		}
+		
+		if(unitData.Team == UnitData.TEAM_PLAYER){
+			print("Playerhit");
+		}
+		
 		print("took damage: " + attackParams[(int)ATTACK_PARAMS.damage]);
 		if(unitData != null){
 			if(unitData.Team != attackParams[(int)ATTACK_PARAMS.attackerTeam]){
