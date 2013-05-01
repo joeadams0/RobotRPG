@@ -25,10 +25,12 @@ public class UnitData : MonoBehaviour {
 	// Optimal distance constants
 	public const float OPTIMAL_DISTANCE_RIFLE = 15;
 	public const float OPTIMAL_DISTANCE_BOMBER = 2f;
+	public const float OPTIMAL_DISTANCE_ROCKET = 30f;
 	
 	// Speed constants
 	public const float SPEED_RIFLE_UNIT = 2f;
 	public const float SPEED_BOMBER_UNIT = 2f;
+	public const float SPEED_ROCKET_UNIT = 4f;
 	
 	//  Friendly fire id constants
 	public const int TEAM_PLAYER = 1;
@@ -81,6 +83,12 @@ public class UnitData : MonoBehaviour {
 		get{return speed;}
 	}
 	
+	private GameObject owner;
+	public GameObject Owner{
+		set{owner = value;}
+		get{return owner;}
+	}
+	
 	// Initializes all attributes
 	void Awake () {
 		unitType = SET_UNIT_TYPE_IN_INSPECTOR;
@@ -110,6 +118,8 @@ public class UnitData : MonoBehaviour {
 			break;
 		case UNIT_TYPE_AI_ROCKET:
 			maxHealth = MAX_HEALTH_AI_MEDIUM;
+			speed = SPEED_ROCKET_UNIT;
+			optimalDistance = OPTIMAL_DISTANCE_ROCKET;
 			team = TEAM_AI;
 			break;
 		default:
@@ -121,9 +131,6 @@ public class UnitData : MonoBehaviour {
 	}
 
 	void Update (){
-		if(this.health <= 0){	
-			Destroy(gameObject);
-		}
 	}
 	
 	private void modifyHealth(float healthModifier){
@@ -131,6 +138,10 @@ public class UnitData : MonoBehaviour {
 			health = health + healthModifier;	
 		}else if(health + healthModifier <= 0){
 			Destroy (gameObject);
+			
+			if(owner != null){
+				owner.SendMessage("enemyDied",this.unitType);	
+			}
 		}
 	}
 }
