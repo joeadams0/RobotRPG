@@ -12,6 +12,9 @@ public class BuyZone : MonoBehaviour {
 	//The amount of time between button presses
 	public float timeBetweenPress;
 	
+	//The key used to open the shop interface
+	public KeyCode openShop;
+	
 	//Can the player activate the shop
 	bool shopInRange;
 	
@@ -31,10 +34,11 @@ public class BuyZone : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKey (KeyCode.Space))
+		if(Input.GetKey (openShop))
 		{
 			if(shopInRange)
 			{
+				//Debounce code for opening/closing shop menu
 				if(timeSinceLast >= timeBetweenPress)
 				{
 					ToggleShop();
@@ -78,6 +82,9 @@ public class BuyZone : MonoBehaviour {
 		}
 	}
 	
+	/// <summary>
+	/// Toggles the shop by sending a message to the ui.
+	/// </summary>
 	void ToggleShop()
 	{
 		if(shopActivated)

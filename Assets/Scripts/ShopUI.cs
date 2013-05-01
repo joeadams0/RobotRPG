@@ -3,6 +3,12 @@ using System.Collections;
 
 public class ShopUI : MonoBehaviour {
 	
+	//The player  script gameobject
+	public Player player;
+	
+	//The index of the basic gun on the player
+	int basicGunIndex = 0;
+	
 	//The left start of the shop background
 	public float shopBackgroundLeftStart;
 	
@@ -49,16 +55,16 @@ public class ShopUI : MonoBehaviour {
 	public string firstWeaponDescription;
 	
 	// The picture of the first power
-	public Texture2D firstPowerPicture;
+	public Texture2D secondWeaponPicture;
 	
 	// The name of the first power
-	public string firstPowerName;
+	public string secondWeaponName;
 	
 	// The description of the first power
-	public string firstPowerDescription;
+	public string secondWeaponDescription;
 	
 	// The price of the first power
-	public int firstPowerPrice;
+	public int secondWeaponPrice;
 	
 	// The text on a button to enter a category
 	public string categoryButtonText;
@@ -138,10 +144,30 @@ public class ShopUI : MonoBehaviour {
 			if(weapon1Level)
 			{
 				if(ShopBlock (new Rect(200,285,1000,120), firstWeaponPicture, firstWeaponName, firstWeaponDescription, firstWeaponPrice,
-					buyText));
+					buyText))
 				{
 					//try to buy it
 					//upgrade the weapon
+					if(player.ScrapMetal >= firstWeaponPrice)
+					{
+						player.ScrapMetal = player.ScrapMetal - firstWeaponPrice;
+						player.Guns[basicGunIndex].upgrade (player);
+					}
+					Debug.Log (player.gunDamage());
+				}
+				if (ShopBlock (new Rect(200,415,1000,120),secondWeaponPicture, secondWeaponName, secondWeaponDescription,
+					secondWeaponPrice, buyText))
+				{
+					if(weapon2Bought)
+					{
+						//Try to buy it
+						//upgrade the weapon
+					}
+					else
+					{
+						//create the weapon 2 entity on player
+						weapon2Bought = true;
+					}
 				}
 			}
 		}
