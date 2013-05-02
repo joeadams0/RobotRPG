@@ -125,4 +125,10 @@ public class Player : MonoBehaviour {
 		return false;
 	}
 	
+	void OnTriggerEnter(Collider other){
+		if(other.tag == "ScrapMetal"){
+			ScrapMetal += 10;
+		}
+	}
+	
 }
