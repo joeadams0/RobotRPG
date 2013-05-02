@@ -136,15 +136,16 @@ public class ShopUI : MonoBehaviour {
 					categoryPrice, categoryButtonText))
 				{
 					baseLevel = false;
-					weapon1Level = true;
+					weaponsBaseLevel = true;
 				}
 				if (ShopBlock (new Rect(200,415,1000,120),generalPowerPicture, powersCategory, powersCategoryDescription,
 					categoryPrice, categoryButtonText))
 				{
-					Debug.Log("clicked 1");
+					baseLevel = false;
+					powersBaseLevel = true;
 				}
 			}
-			if(weapon1Level)
+			if(weaponsBaseLevel)
 			{
 				if(ShopBlock (new Rect(200,285,1000,120), firstWeaponPicture, firstWeaponName, firstWeaponDescription, firstWeaponPrice,
 					buyText))
@@ -177,6 +178,15 @@ public class ShopUI : MonoBehaviour {
 							weapon2Bought = true;
 						}
 					}
+				}
+			}
+			if(powersBaseLevel)
+			{
+				GUI.Box(new Rect(200, 285, 1000, 120), "Powers not yet authorized! Pay 1600 Joe Bucks for powers DLC!");
+				if(GUI.Button (new Rect(200, 415, 1000, 120), "I'm too poor, back to main menu."))
+				{
+					powersBaseLevel = false;
+					baseLevel = true;
 				}
 			}
 		}

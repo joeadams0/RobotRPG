@@ -10,7 +10,7 @@ public class BasicGun : Gun {
 	
 	public BasicGun()
 	{
-		damage = 5;
+		damage = 500;
 	}
 
 	public bool canFire(Player p)
