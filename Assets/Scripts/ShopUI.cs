@@ -3,6 +3,15 @@ using System.Collections;
 
 public class ShopUI : MonoBehaviour {
 	
+	//The player  script gameobject
+	public Player player;
+	
+	//The index of the basic gun on the player
+	int basicGunIndex = 0;
+	
+	//The index of the shotgun on the player
+	int shotgunIndex;
+	
 	//The left start of the shop background
 	public float shopBackgroundLeftStart;
 	
@@ -42,20 +51,23 @@ public class ShopUI : MonoBehaviour {
 	// The name of the first weapon
 	public string firstWeaponName;
 	
+	// price of first weapon upgrade
+	public int firstWeaponPrice;
+	
 	// The description of the frist weapon
-	public string fristWeaponDescription;
+	public string firstWeaponDescription;
 	
 	// The picture of the first power
-	public Texture2D firstPowerPicture;
+	public Texture2D secondWeaponPicture;
 	
 	// The name of the first power
-	public string firstPowerName;
+	public string secondWeaponName;
 	
 	// The description of the first power
-	public string firstPowerDescription;
+	public string secondWeaponDescription;
 	
 	// The price of the first power
-	public int firstPowerPrice;
+	public int secondWeaponPrice;
 	
 	// The text on a button to enter a category
 	public string categoryButtonText;
@@ -83,14 +95,22 @@ public class ShopUI : MonoBehaviour {
 	
 	// is the menu active?
 	bool menuOn;
+	
+	// is the base level active
+	bool baseLevel;
+	
+	//has the second weapon been bought
+	bool weapon2Bought;
 
 	// Use this for initialization
 	void Start () {
 		menuOn = false;
+		baseLevel = false;
 		weaponsBaseLevel = false;
 		powersBaseLevel = false;
 		weapon1Level = false;
 		power1Level = false;
+		weapon2Bought = false;
 	}
 	
 	// Update is called once per frame
@@ -98,6 +118,7 @@ public class ShopUI : MonoBehaviour {
 		if(Input.GetKey (KeyCode.LeftArrow))
 		{
 			menuOn = !menuOn;
+			baseLevel = !baseLevel;
 			Debug.Log (menuOn.ToString ());
 		}
 	}
@@ -106,17 +127,67 @@ public class ShopUI : MonoBehaviour {
 	{
 		if(menuOn)
 		{
+			GUI.skin = null;
 			GUI.Box (new Rect(190, 60, 1020, 700), "");
 			GUI.skin = robotSkin;
-			if (ShopBlock (new Rect(200,300,1000,120),generalWeaponPicture, weaponsCategory, weaponsCatergoryDescription,
-				categoryPrice, categoryButtonText))
+			if(baseLevel)
 			{
-				Debug.Log("clicked 1");
+				if (ShopBlock (new Rect(200,285,1000,120),generalWeaponPicture, weaponsCategory, weaponsCatergoryDescription,
+					categoryPrice, categoryButtonText))
+				{
+					baseLevel = false;
+					weaponsBaseLevel = true;
+				}
+				if (ShopBlock (new Rect(200,415,1000,120),generalPowerPicture, powersCategory, powersCategoryDescription,
+					categoryPrice, categoryButtonText))
+				{
+					baseLevel = false;
+					powersBaseLevel = true;
+				}
 			}
-			if (ShopBlock (new Rect(200,440,1000,120),generalPowerPicture, powersCategory, powersCategoryDescription,
-				categoryPrice, categoryButtonText))
+			if(weaponsBaseLevel)
 			{
-				Debug.Log("clicked 1");
+				if(ShopBlock (new Rect(200,285,1000,120), firstWeaponPicture, firstWeaponName, firstWeaponDescription, firstWeaponPrice,
+					buyText))
+				{
+					//try to buy it
+					//upgrade the weapon
+					if(tryBuy (firstWeaponPrice))
+					{
+						player.Guns[basicGunIndex].upgrade (player);
+					}
+					Debug.Log (player.gunDamage());
+				}
+				if (ShopBlock (new Rect(200,415,1000,120),secondWeaponPicture, secondWeaponName, secondWeaponDescription,
+					secondWeaponPrice, buyText))
+				{
+					if(weapon2Bought)
+					{
+						if(tryBuy (secondWeaponPrice))
+						{
+							player.Guns[shotgunIndex].upgrade (player);
+						}
+					}
+					else
+					{
+						if(tryBuy (secondWeaponPrice))
+						{
+							Shotgun shotgun = new Shotgun();
+							player.Guns.Add (shotgun);
+							shotgunIndex = player.Guns.IndexOf (shotgun);
+							weapon2Bought = true;
+						}
+					}
+				}
+			}
+			if(powersBaseLevel)
+			{
+				GUI.Box(new Rect(200, 285, 1000, 120), "Powers not yet authorized! Pay 1600 Joe Bucks for powers DLC!");
+				if(GUI.Button (new Rect(200, 415, 1000, 120), "I'm too poor, back to main menu."))
+				{
+					powersBaseLevel = false;
+					baseLevel = true;
+				}
 			}
 		}
 	}
@@ -133,6 +204,21 @@ public class ShopUI : MonoBehaviour {
 	void ActivateMenu()
 	{
 		menuOn = true;
+		baseLevel = true;
+	}
+	
+	bool tryBuy(int cost)
+	{
+		if(player.ScrapMetal >= cost)
+		{
+			player.ScrapMetal = player.ScrapMetal - cost;
+			return true;
+		}
+		
+		else
+		{
+			return false;
+		}
 	}
 	
 	/// <summary>
@@ -170,6 +256,6 @@ public class ShopUI : MonoBehaviour {
 		GUI.Label(new Rect(itemStartPosition, boxPosition.y + 50f, 600, 25), itemDescription);
 		itemStartPosition = boxPosition.xMax - 450f;
 		GUI.Label (new Rect(itemStartPosition,boxPosition.y + 10f, 100, 25), price.ToString());
-		return GUI.Button (new Rect(boxPosition.xMax - 210f, boxPosition.y + 10f, 200, 100), "Buy");
+		return GUI.Button (new Rect(boxPosition.xMax - 210f, boxPosition.y + 10f, 200, 100), buttonText);
 	}
 }

@@ -26,6 +26,9 @@ public class Movement : MonoBehaviour {
 	
 	ParticleSystem bullets;
 	
+	UnitData unitData;
+	AttackScript attackScript;
+	
 	bool running;
 	
 	Player player;
@@ -51,6 +54,9 @@ public class Movement : MonoBehaviour {
 		player = GetComponent<Player>();
 		
 		bullets = (ParticleSystem)GameObject.FindGameObjectWithTag("gun").GetComponent<ParticleSystem>();
+		
+		unitData = GetComponent<UnitData>();
+		attackScript = GetComponent<AttackScript>();
 	}
 	
 	// Update is called once per frame
@@ -195,14 +201,7 @@ public class Movement : MonoBehaviour {
 			if (player.fireGun())
 			{
 				bullets.Play();
-				RaycastHit hit;
-				if (Physics.Raycast(transform.position, forwardDir, out hit))
-				{
-					if (hit.transform.gameObject.tag.Equals("Enemy"))
-					{
-						hit.transform.gameObject.GetComponent<TakesDamage>().hit(new float[]{0,5,0});
-					}
-				}
+				attackScript.attack(forwardDir, player.gunRange(), AttackScript.ATTACK_TYPE_BULLET, player.gunDamage(), unitData.UnitType);
 			}
 		}
 	}

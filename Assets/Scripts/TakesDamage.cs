@@ -24,6 +24,10 @@ public class TakesDamage : MonoBehaviour {
 			return;	
 		}
 		
+		if(unitData.Team == UnitData.TEAM_PLAYER){
+			print("Playerhit");
+		}
+	
 		if(unitData != null){
 			if(unitData.Team != attackParams[(int)ATTACK_PARAMS.attackerTeam]){
 				unitData.SendMessage("modifyHealth",-attackParams[(int)ATTACK_PARAMS.damage]);	

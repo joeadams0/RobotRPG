@@ -71,6 +71,16 @@ public class Player : MonoBehaviour {
 		return Abilities.Count;
 	}
 	
+	public float gunDamage()
+	{
+		return Attack * Guns[_gunIndex].getDamage();
+	}
+	
+	public float gunRange()
+	{
+		return Guns[_gunIndex].getRange();
+	}
+	
 	/// <summary>
 	/// Switchs the selected gun.
 	/// </summary>
