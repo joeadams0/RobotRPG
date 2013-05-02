@@ -1,3 +1,4 @@
+// Joe Adams - JJA56
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,7 +57,10 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(Health<=0){
+			// Game over
+			Destroy(this.gameObject);
+		}
 	}
 	
 	public int numGuns(){
