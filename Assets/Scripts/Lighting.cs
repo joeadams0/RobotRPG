@@ -12,6 +12,8 @@ public class Lighting : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.position = new Vector3(player.transform.position.x,50,player.transform.position.z);
+		if(player != null){
+			this.transform.position = new Vector3(player.transform.position.x,50,player.transform.position.z);
+		}
 	}
 }

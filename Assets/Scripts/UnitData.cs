@@ -9,6 +9,7 @@ public class UnitData : MonoBehaviour {
 	public const int UNIT_TYPE_AI_RIFLE = 3;
 	public const int UNIT_TYPE_AI_BOMBER = 4;
 	public const int UNIT_TYPE_AI_ROCKET = 5;
+	public const int UNIT_TYPE_AI_MISSILE = 6;
 	
 	// Max health constants
 	public const int MAX_HEALTH_PLAYER_DEFAULT = 150;
@@ -17,7 +18,10 @@ public class UnitData : MonoBehaviour {
 	public const int MAX_HEALTH_AI_LARGE = 300;
 	
 	// Attacking range constants
-	public const int ATTACK_RANGE_RIFLE_UNIT = 20;
+	public const int ATTACK_RANGE_RIFLE_UNIT = 30;
+	public const int ATTACK_RANGE_BOMBER_UNIT = 3;
+	public const int ATTACK_RANGE_ROCKET_UNIT = 40;
+	public const int ATTACK_RANGE_MISSILE = 2;
 	
 	// Attack damage constants
 	public const float ATTACK_DAMAGE_BULLET = 20;
@@ -26,13 +30,16 @@ public class UnitData : MonoBehaviour {
 	public const float OPTIMAL_DISTANCE_RIFLE = 15;
 	public const float OPTIMAL_DISTANCE_BOMBER = 2f;
 	public const float OPTIMAL_DISTANCE_ROCKET = 30f;
+	public const float OPTIMAL_DISTANCE_MISSILE = 0f;
 	
 	// Speed constants
 	public const float SPEED_RIFLE_UNIT = 2f;
 	public const float SPEED_BOMBER_UNIT = 2f;
 	public const float SPEED_ROCKET_UNIT = 4f;
+	public const float SPEED_MISSILE = 6.5f;
 	
 	//  Friendly fire id constants
+	public const int TEAM_NONE = 0;
 	public const int TEAM_PLAYER = 1;
 	public const int TEAM_AI = 2;
 	
@@ -112,6 +119,7 @@ public class UnitData : MonoBehaviour {
 			break;
 		case UNIT_TYPE_AI_BOMBER:
 			maxHealth = MAX_HEALTH_AI_LARGE;
+			attackRange = ATTACK_RANGE_BOMBER_UNIT;
 			speed = SPEED_BOMBER_UNIT;
 			optimalDistance = OPTIMAL_DISTANCE_BOMBER;
 			team = TEAM_AI;
@@ -119,7 +127,15 @@ public class UnitData : MonoBehaviour {
 		case UNIT_TYPE_AI_ROCKET:
 			maxHealth = MAX_HEALTH_AI_MEDIUM;
 			speed = SPEED_ROCKET_UNIT;
+			attackRange = ATTACK_RANGE_ROCKET_UNIT;
 			optimalDistance = OPTIMAL_DISTANCE_ROCKET;
+			team = TEAM_AI;
+			break;
+		case UNIT_TYPE_AI_MISSILE:
+			maxHealth = 1000;
+			speed = SPEED_MISSILE;
+			attackRange = ATTACK_RANGE_MISSILE;
+			optimalDistance = OPTIMAL_DISTANCE_MISSILE;
 			team = TEAM_AI;
 			break;
 		default:
