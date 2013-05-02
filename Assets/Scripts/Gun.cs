@@ -38,4 +38,12 @@ public interface Gun {
 	/// The damage.
 	/// </returns>
 	float getDamage();
+	
+	/// <summary>
+	/// Gets the range of the gun.
+	/// </summary>
+	/// <returns>
+	/// The range.
+	/// </returns>
+	float getRange();
 }

@@ -201,7 +201,7 @@ public class Movement : MonoBehaviour {
 			if (player.fireGun())
 			{
 				bullets.Play();
-				attackScript.attack(forwardDir, 1000f, AttackScript.ATTACK_TYPE_BULLET, player.gunDamage(), unitData.UnitType);
+				attackScript.attack(forwardDir, player.gunRange(), AttackScript.ATTACK_TYPE_BULLET, player.gunDamage(), unitData.UnitType);
 			}
 		}
 	}

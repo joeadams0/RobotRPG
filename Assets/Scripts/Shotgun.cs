@@ -1,18 +1,23 @@
 using UnityEngine;
 using System.Collections;
 
-public class BasicGun : Gun {
+public class Shotgun : Gun {
 	
-	private float damage;
-	public float cooldownTime = 0.5f;
-	float lastFireTime = 0f;
-	public float range = 50f;
+	// The damage that the gun does
+	public float damage;
 	
-	public BasicGun()
-	{
-		damage = 5;
+	//The time between shots
+	public float cooldownTime = 1.5f;
+	
+	//The last time the gun was fired
+	private float lastFireTime = 0f;
+	
+	public float range = 10f;
+	
+	public Shotgun (){
+		damage = 35;
 	}
-
+	
 	public bool canFire(Player p)
 	{
 		if (Time.time > lastFireTime + cooldownTime)
@@ -34,7 +39,7 @@ public class BasicGun : Gun {
 	
 	public void upgrade(Player p)
 	{
-		damage = damage + 0.2f;
+		cooldownTime = cooldownTime - .1f;
 	}
 	
 	public float getDamage()

@@ -9,6 +9,9 @@ public class ShopUI : MonoBehaviour {
 	//The index of the basic gun on the player
 	int basicGunIndex = 0;
 	
+	//The index of the shotgun on the player
+	int shotgunIndex;
+	
 	//The left start of the shop background
 	public float shopBackgroundLeftStart;
 	
@@ -148,9 +151,8 @@ public class ShopUI : MonoBehaviour {
 				{
 					//try to buy it
 					//upgrade the weapon
-					if(player.ScrapMetal >= firstWeaponPrice)
+					if(tryBuy (firstWeaponPrice))
 					{
-						player.ScrapMetal = player.ScrapMetal - firstWeaponPrice;
 						player.Guns[basicGunIndex].upgrade (player);
 					}
 					Debug.Log (player.gunDamage());
@@ -160,13 +162,20 @@ public class ShopUI : MonoBehaviour {
 				{
 					if(weapon2Bought)
 					{
-						//Try to buy it
-						//upgrade the weapon
+						if(tryBuy (secondWeaponPrice))
+						{
+							player.Guns[shotgunIndex].upgrade (player);
+						}
 					}
 					else
 					{
-						//create the weapon 2 entity on player
-						weapon2Bought = true;
+						if(tryBuy (secondWeaponPrice))
+						{
+							Shotgun shotgun = new Shotgun();
+							player.Guns.Add (shotgun);
+							shotgunIndex = player.Guns.IndexOf (shotgun);
+							weapon2Bought = true;
+						}
 					}
 				}
 			}
@@ -186,6 +195,20 @@ public class ShopUI : MonoBehaviour {
 	{
 		menuOn = true;
 		baseLevel = true;
+	}
+	
+	bool tryBuy(int cost)
+	{
+		if(player.ScrapMetal >= cost)
+		{
+			player.ScrapMetal = player.ScrapMetal - cost;
+			return true;
+		}
+		
+		else
+		{
+			return false;
+		}
 	}
 	
 	/// <summary>
