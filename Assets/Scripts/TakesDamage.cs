@@ -1,7 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-// Calculates damage taken 
+/* Created by Rachid Lamouri (rxl244)
+ * 
+ * This script gets added to anything that can take damage
+ * It recieves a message that it was hit, it checks to see if the attacker
+ * is not on the same team, and that the unit is not immune to that type of damage
+ */ 
 public class TakesDamage : MonoBehaviour {
 	private UnitData unitData;
 	
@@ -28,8 +33,10 @@ public class TakesDamage : MonoBehaviour {
 			print("Playerhit");
 		}
 	
+		// Attack is valid if the attacker team and this unit's team are different
 		if(unitData != null){
 			if(unitData.Team != attackParams[(int)ATTACK_PARAMS.attackerTeam]){
+				// modifyhealth is managed by the unitdata script
 				unitData.SendMessage("modifyHealth",-attackParams[(int)ATTACK_PARAMS.damage]);	
 			}
 		}else{

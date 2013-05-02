@@ -1,7 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-// Script to hold all base information for all units including the player
+/* Created by Rachid Lamouri (rxl244)
+ * 
+ * Script to hold all base information for all units including the player
+ * This script is accessed by other scripts that need the same data about a unit
+ * 
+ * Unit types are assigned in the inspector for each prefab
+ */
 public class UnitData : MonoBehaviour {
 	// unit types (use these as reference when setting types in the inspector)
 	public const int UNIT_TYPE_PLAYER = 1;
@@ -46,7 +52,7 @@ public class UnitData : MonoBehaviour {
 	// Set this in the inspector: this value is read on startup
 	public int SET_UNIT_TYPE_IN_INSPECTOR;
 	
-	// Unit attributes
+	// All unit attributes with setters and getters if necessary
 	private int unitType;
 	public int UnitType{
 		set{}
@@ -96,7 +102,8 @@ public class UnitData : MonoBehaviour {
 		get{return owner;}
 	}
 	
-	// Initializes all attributes
+	// Initializes all attributes. This is in the awake method and not the start method so that 
+	// the data gets set immediatey when an object is initialized
 	void Awake () {
 		unitType = SET_UNIT_TYPE_IN_INSPECTOR;
 		
@@ -149,18 +156,27 @@ public class UnitData : MonoBehaviour {
 	void Update (){
 	}
 	
+	
+	// When a unit takes damage, this script recieves a message
 	private void modifyHealth(float healthModifier){
 		if(health + healthModifier > 0 && health + healthModifier <= maxHealth){
+			// unit is still alive
 			health = health + healthModifier;	
 		}else if(health + healthModifier <= 0){
+			// unit has died. Creates scrapmetal if the unit is an AI unit
 			if (unitType == UNIT_TYPE_AI_BOMBER || unitType == UNIT_TYPE_AI_MELEE || unitType == UNIT_TYPE_AI_RIFLE || unitType == UNIT_TYPE_AI_ROCKET)
 				Instantiate(Resources.Load("AI/ScrapMetal"), this.transform.position, Quaternion.identity);
 			
+			// Destroys this object
 			Destroy (gameObject);
 			
+			// AI units message their spawner to make more units
 			if(owner != null){
 				owner.SendMessage("enemyDied",this.unitType);	
 			}
+		}else if(health + healthModifier > maxHealth){
+			// resets health to maximum if it exceeds the maximum
+			health = maxHealth;
 		}
 	}
 }
