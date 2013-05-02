@@ -54,7 +54,7 @@ public class UnitData : MonoBehaviour {
 	}
 	
 	private int maxHealth;
-	private float health;
+	public float health;
 	public float Health{
 		set{}
 		get{return health;}
@@ -153,6 +153,9 @@ public class UnitData : MonoBehaviour {
 		if(health + healthModifier > 0 && health + healthModifier <= maxHealth){
 			health = health + healthModifier;	
 		}else if(health + healthModifier <= 0){
+			if (unitType == UNIT_TYPE_AI_BOMBER || unitType == UNIT_TYPE_AI_MELEE || unitType == UNIT_TYPE_AI_RIFLE || unitType == UNIT_TYPE_AI_ROCKET)
+				Instantiate(Resources.Load("AI/ScrapMetal"), this.transform.position, Quaternion.identity);
+			
 			Destroy (gameObject);
 			
 			if(owner != null){
