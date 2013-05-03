@@ -125,6 +125,7 @@ public class ShopUI : MonoBehaviour {
 	
 	void OnGUI ()
 	{
+		GUI.Box (new Rect (10, 10, 100, 30), player.ScrapMetal.ToString());
 		if(menuOn)
 		{
 			GUI.skin = null;

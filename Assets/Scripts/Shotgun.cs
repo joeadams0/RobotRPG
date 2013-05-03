@@ -15,7 +15,7 @@ public class Shotgun : Gun {
 	public float range = 10f;
 	
 	public Shotgun (){
-		damage = 35;
+		damage = 100;
 	}
 	
 	public bool canFire(Player p)
