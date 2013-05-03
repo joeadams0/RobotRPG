@@ -1,3 +1,8 @@
+/// <summary>
+/// Shop UI and basic UI.
+/// </summary>
+/// By Joseph Satter
+
 using UnityEngine;
 using System.Collections;
 
@@ -87,12 +92,6 @@ public class ShopUI : MonoBehaviour {
 	// is The power selection menu of the shop active
 	bool powersBaseLevel;
 	
-	//is the menu for the first weapon active
-	bool weapon1Level;
-	
-	//is the menu for the first power active
-	bool power1Level;
-	
 	// is the menu active?
 	bool menuOn;
 	
@@ -108,37 +107,35 @@ public class ShopUI : MonoBehaviour {
 		baseLevel = false;
 		weaponsBaseLevel = false;
 		powersBaseLevel = false;
-		weapon1Level = false;
-		power1Level = false;
 		weapon2Bought = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKey (KeyCode.LeftArrow))
-		{
-			menuOn = !menuOn;
-			baseLevel = !baseLevel;
-			Debug.Log (menuOn.ToString ());
-		}
 	}
 	
+	//Stuff that's on the gui
 	void OnGUI ()
 	{
+		//The scrap counter
 		GUI.Box (new Rect (10, 10, 100, 30), player.ScrapMetal.ToString());
+		//Display this if the shop is open
 		if(menuOn)
 		{
 			GUI.skin = null;
 			GUI.Box (new Rect(190, 60, 1020, 700), "");
 			GUI.skin = robotSkin;
+			//Displays the main shop menu
 			if(baseLevel)
 			{
+				//Switches to weapons level
 				if (ShopBlock (new Rect(200,285,1000,120),generalWeaponPicture, weaponsCategory, weaponsCatergoryDescription,
 					categoryPrice, categoryButtonText))
 				{
 					baseLevel = false;
 					weaponsBaseLevel = true;
 				}
+				// Switches to powers menu
 				if (ShopBlock (new Rect(200,415,1000,120),generalPowerPicture, powersCategory, powersCategoryDescription,
 					categoryPrice, categoryButtonText))
 				{
@@ -146,8 +143,10 @@ public class ShopUI : MonoBehaviour {
 					powersBaseLevel = true;
 				}
 			}
+			//The weapon upgrade level
 			if(weaponsBaseLevel)
 			{
+				//Tries to buy an upgrade for the basic weapon
 				if(ShopBlock (new Rect(200,285,1000,120), firstWeaponPicture, firstWeaponName, firstWeaponDescription, firstWeaponPrice,
 					buyText))
 				{
@@ -159,9 +158,11 @@ public class ShopUI : MonoBehaviour {
 					}
 					Debug.Log (player.gunDamage());
 				}
+				//Tries to buy the shotgun or upgrade it
 				if (ShopBlock (new Rect(200,415,1000,120),secondWeaponPicture, secondWeaponName, secondWeaponDescription,
 					secondWeaponPrice, buyText))
 				{
+					//Upgrades the shotgun if it is bought
 					if(weapon2Bought)
 					{
 						if(tryBuy (secondWeaponPrice))
@@ -169,6 +170,7 @@ public class ShopUI : MonoBehaviour {
 							player.Guns[shotgunIndex].upgrade (player);
 						}
 					}
+					//Buys the shotgun
 					else
 					{
 						if(tryBuy (secondWeaponPrice))
@@ -181,6 +183,7 @@ public class ShopUI : MonoBehaviour {
 					}
 				}
 			}
+			//The "powers" menu
 			if(powersBaseLevel)
 			{
 				GUI.Box(new Rect(200, 285, 1000, 120), "Powers not yet authorized! Pay 1600 Joe Bucks for powers DLC!");
@@ -193,21 +196,34 @@ public class ShopUI : MonoBehaviour {
 		}
 	}
 	
+	/// <summary>
+	/// Deactivates the menu.
+	/// </summary>
 	void DeactivateMenu()
 	{
 		menuOn = false;
 		weaponsBaseLevel = false;
 		powersBaseLevel = false;
-		weapon1Level = false;
-		power1Level = false;
 	}
 	
+	/// <summary>
+	/// Activates the menu.
+	/// </summary>
 	void ActivateMenu()
 	{
 		menuOn = true;
 		baseLevel = true;
 	}
 	
+	/// <summary>
+	/// Tries to buy the weapon.
+	/// </summary>
+	/// <returns>
+	/// If the weapon is bought.
+	/// </returns>
+	/// <param name='cost'>
+	/// The cost of the weapon.
+	/// </param>
 	bool tryBuy(int cost)
 	{
 		if(player.ScrapMetal >= cost)

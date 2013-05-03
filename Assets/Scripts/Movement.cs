@@ -6,6 +6,8 @@ public class Movement : MonoBehaviour {
 	public float cameraHeight;
 	public float cameraDistance;
 	public Transform cameraTransform;
+	//The time that should be between weapon switches
+	public float timeBetweenSwitch;
 	
 	public float walkSpeed;
 	public float runSpeed;
@@ -25,6 +27,9 @@ public class Movement : MonoBehaviour {
 	Animation anim;
 	
 	ParticleSystem bullets;
+	
+	//The time of the last switch
+	float timeSinceLastSwitch;
 	
 	UnitData unitData;
 	AttackScript attackScript;
@@ -148,19 +153,28 @@ public class Movement : MonoBehaviour {
 		switchGun();
 		switchAbility();
 		fireGun();
+		timeSinceLastSwitch += Time.deltaTime;
 	}
 	
 	void switchGun()
 	{
 		if (Input.GetKey(KeyCode.Q))
 		{
-			currentGun = (currentGun + player.numGuns() - 1) % player.numGuns ();
-			player.switchGun(currentGun);
+			if(timeSinceLastSwitch >= timeBetweenSwitch)
+			{
+				currentGun = (currentGun + player.numGuns() - 1) % player.numGuns ();
+				player.switchGun(currentGun);
+				timeSinceLastSwitch = 0;
+			}
 		}
 		else if(Input.GetKey (KeyCode.E))
 		{
-			currentGun = (currentGun + 1) % player.numGuns();
-			player.switchGun(currentGun);
+			if(timeSinceLastSwitch >= timeBetweenSwitch)
+			{
+				currentGun = (currentGun + 1) % player.numGuns();
+				player.switchGun(currentGun);
+				timeSinceLastSwitch = 0;
+			}
 		}
 	}
 	

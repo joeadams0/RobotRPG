@@ -1,3 +1,8 @@
+/// <summary>
+/// Buy zone.
+/// </summary>
+/// By Joseph Satterfield
+
 using UnityEngine;
 using System.Collections;
 
